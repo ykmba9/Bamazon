@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
 	user: 'root',
 
 	// Your password
-	password: '',
+	password: 'bootcamp123',
 	database: 'Bamazon'
 });
 
@@ -79,11 +79,11 @@ function displayInventory() {
 		var strOut = '';
 		for (var i = 0; i < data.length; i++) {
 			strOut = '';
-			strOut += 'Item ID: ' + data[i].itemId + '  //  ';
-			strOut += 'Product Name: ' + data[i].productName + '  //  ';
-			strOut += 'Department: ' + data[i].departmentName + '  //  ';
-			strOut += 'Price: $' + data[i].price + '  //  ';
-			strOut += 'Quantity: ' + data[i].stockQuantity + '\n';
+			strOut += 'Item ID: ' + data[i].ItemId + '  //  ';
+			strOut += 'Product Name: ' + data[i].ProductName + '  //  ';
+			strOut += 'Department: ' + data[i].DepartmentName + '  //  ';
+			strOut += 'Price: $' + data[i].Price + '  //  ';
+			strOut += 'Quantity: ' + data[i].StockQuantity + '\n';
 
 			console.log(strOut);
 		}
@@ -101,7 +101,7 @@ function displayLowInventory() {
 
 	// Construct the db query string
 	
-	queryStr = 'SELECT * FROM products WHERE stockQuantity < 100';
+	queryStr = 'SELECT * FROM products WHERE StockQuantity < 100';
 
 	// Make the db query
 	connection.query(queryStr, function(err, data) {
@@ -113,11 +113,11 @@ function displayLowInventory() {
 		var strOut = '';
 		for (var i = 0; i < data.length; i++) {
 			strOut = '';
-			strOut += 'Item ID: ' + data[i].itemI+ '  //  ';
-			strOut += 'Product Name: ' + data[i].productName + '  //  ';
-			strOut += 'Department: ' + data[i].departmentName + '  //  ';
-			strOut += 'Price: $' + data[i].price + '  //  ';
-			strOut += 'Quantity: ' + data[i].stockQuantity + '\n';
+			strOut += 'Item ID: ' + data[i].ItemID+ '  //  ';
+			strOut += 'Product Name: ' + data[i].ProductName + '  //  ';
+			strOut += 'Department: ' + data[i].DepartmentName + '  //  ';
+			strOut += 'Price: $' + data[i].Price + '  //  ';
+			strOut += 'Quantity: ' + data[i].StockQuantity + '\n';
 
 			console.log(strOut);
 		}
@@ -162,14 +162,14 @@ function addInventory() {
 	inquirer.prompt([
 		{
 			type: 'input',
-			name: 'itemId',
+			name: 'ItemId',
 			message: 'Please enter the Item ID for stock_count update.',
 			validate: validateInteger,
 			filter: Number
 		},
 		{
 			type: 'input',
-			name: 'quantity',
+			name: 'Qantity',
 			message: 'How many would you like to add?',
 			validate: validateInteger,
 			filter: Number
@@ -177,8 +177,8 @@ function addInventory() {
 	]).then(function(input) {
 		// console.log('Manager has selected: \n    item_id = '  + input.item_id + '\n    additional quantity = ' + input.quantity);
 
-		var item = input.itemId;
-		var addQuantity = input.quantity;
+		var item = input.ItemId;
+		var addQuantity = input.Quantity;
 
 		// Query db to confirm that the given item ID exists and to determine the current stock_count
 		var queryStr = 'SELECT * FROM products WHERE ?';
@@ -194,22 +194,22 @@ function addInventory() {
 				addInventory();
 
 			} else {
-				var productData = data[0];
+				var ProductData = data[0];
 
-				// console.log('productData = ' + JSON.stringify(productData));
-				// console.log('productData.stock_quantity = ' + productData.stock_quantity);
+				// console.log('ProductData = ' + JSON.stringify(ProductData));
+				// console.log('ProductData.stock_quantity = ' + ProductData.stock_quantity);
 
 				console.log('Updating Inventory...');
 
 				// Construct the updating query string
-				var updateQueryStr = 'UPDATE products SET stockQuantity = ' + (productData.stockQuantity + addQuantity) + ' WHERE itemId = ' + item;
+				var updateQueryStr = 'UPDATE products SET StockQuantity = ' + (ProductData.StockQuantity + addQuantity) + ' WHERE ItemId = ' + item;
 				// console.log('updateQueryStr = ' + updateQueryStr);
 
 				// Update the inventory
 				connection.query(updateQueryStr, function(err, data) {
 					if (err) throw err;
 
-					console.log('Stock count for Item ID ' + item + ' has been updated to ' + (productData.stockQuantity + addQuantity) + '.');
+					console.log('Stock count for Item ID ' + item + ' has been updated to ' + (ProductData.StockQuantity + addQuantity) + '.');
 					console.log("\n---------------------------------------------------------------------\n");
 
 					// End the database connection
@@ -228,33 +228,33 @@ function createNewProduct() {
 	inquirer.prompt([
 		{
 			type: 'input',
-			name: 'productName',
+			name: 'ProductName',
 			message: 'Please enter the new product name.',
 		},
 		{
 			type: 'input',
-			name: 'departmentName',
+			name: 'DepartmentName',
 			message: 'Which department does the new product belong to?',
 		},
 		{
 			type: 'input',
-			name: 'price',
+			name: 'Price',
 			message: 'What is the price per unit?',
 			validate: validateNumeric
 		},
 		{
 			type: 'input',
-			name: 'stockQuantity',
+			name: 'StockQuantity',
 			message: 'How many items are in stock?',
 			validate: validateInteger
 		}
 	]).then(function(input) {
 		// console.log('input: ' + JSON.stringify(input));
 
-		console.log('Adding New Item: \n    productName = ' + input.productName + '\n' +  
-									   '    departmentName = ' + input.departmentName + '\n' +  
-									   '    price = ' + input.price + '\n' +  
-									   '    stockQuantity = ' + input.stockQuantity);
+		console.log('Adding New Item: \n    ProductName = ' + input.ProductName + '\n' +  
+									   '    DepartmentName = ' + input.DepartmentName + '\n' +  
+									   '    Price = ' + input.Price + '\n' +  
+									   '    StockQuantity = ' + input.StockQuantity);
 
 		// Create the insertion query string
 		var queryStr = 'INSERT INTO products SET ?';

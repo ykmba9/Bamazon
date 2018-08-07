@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
 	user: 'root',
 
 	// Your password
-	password: '',
+	password: 'bootcamp123',
 	database: 'Bamazon'
 });
 
@@ -116,17 +116,20 @@ function displayInventory() {
 
 		console.log('Existing Inventory: ');
 		console.log('...................\n');
+		
 
 		var strOut = '';
 		for (var i = 0; i < data.length; i++) {
+			console.log(data[i]);
 			strOut = '';
-			strOut += 'Item ID: ' + data[i].itemId + '  //  ';
-			strOut += 'Product Name: ' + data[i].productName + '  //  ';
-			strOut += 'Department: ' + data[i].departmentName + '  //  ';
-			strOut += 'Price: $' + data[i].price + '\n';
+			strOut += 'Item ID: ' + data[i].ItemID + '  //  ';
+			strOut += 'Product Name: ' + data[i].ProductName + '  //  ';
+			strOut += 'Department: ' + data[i].DepartmentName + '  //  ';
+			strOut += 'Price: $' + data[i].Price + '\n';
 
 			console.log(strOut);
 		}
+
 
 	  	console.log("---------------------------------------------------------------------\n");
 
