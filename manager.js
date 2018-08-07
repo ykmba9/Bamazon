@@ -175,10 +175,10 @@ function addInventory() {
 			filter: Number
 		}
 	]).then(function(input) {
-		// console.log('Manager has selected: \n    item_id = '  + input.item_id + '\n    additional quantity = ' + input.quantity);
+		// console.log('Manager has selected: \n    ItemId = '  + input.ItemId + '\n    additional quantity = ' + input.Quantity);
 
-		var item = input.ItemId;
-		var addQuantity = input.Quantity;
+		var item = input.itemId;
+		var addQuantity = input.quantity;
 
 		// Query db to confirm that the given item ID exists and to determine the current stock_count
 		var queryStr = 'SELECT * FROM products WHERE ?';
@@ -186,7 +186,7 @@ function addInventory() {
 		connection.query(queryStr, {itemId: item}, function(err, data) {
 			if (err) throw err;
 
-			// If the user has selected an invalid item ID, data attay will be empty
+			// If the user has selected an invalid Item ID, data attay will be empty
 			// console.log('data = ' + JSON.stringify(data));
 
 			if (data.length === 0) {
