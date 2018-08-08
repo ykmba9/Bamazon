@@ -1,5 +1,7 @@
 
-# Node.js & MySQL(Bamazon)
+# Node.js & MySQL Assignment
+
+# Bamazon App
 Created an Amazon-like store front using Node.js and MySQL.
 
 # What Each JavaScript Does:
@@ -17,7 +19,7 @@ Created an Amazon-like store front using Node.js and MySQL.
     *View Low Inventory
     *Add to Inventory
     *Add New Product
-    
+
 # Technologies used
     Node.js
     Inquire NPM Package (https://www.npmjs.com/package/inquirer)
@@ -27,7 +29,7 @@ Created an Amazon-like store front using Node.js and MySQL.
 - Node.js - Download the latest version of Node https://nodejs.org/en/
 - Create a MYSQL database called 'Bamazon'
 
-#Built With:
+# Built With:
     MySQLWorkbench
     Terminal/Gitbash
 
