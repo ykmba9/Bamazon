@@ -1,23 +1,23 @@
-// Pull in required dependencies
+
 var inquirer = require('inquirer');
 var mysql = require('mysql');
 
-// Define the MySQL connection parameters
+
 var connection = mysql.createConnection({
 	host: 'localhost',
 	port: 3306,
 
-	// Your username
+
 	user: 'root',
 
-	// Your password
+	
 	password: '',
 	database: 'Bamazon'
 });
 
 // promptManagerAction will present menu options to the manager and trigger appropriate logic
 function promptManagerAction() {
-	// console.log('___ENTER promptManagerAction___');
+	
 
 	// Prompt the manager to select an option
 	inquirer.prompt([
@@ -43,7 +43,7 @@ function promptManagerAction() {
 			}
 		}
 	]).then(function(input) {
-		// console.log('User has selected: ' + JSON.stringify(input));
+		
 
 		// Trigger the appropriate action based on the user input
 		if (input.option ==='sale') {
@@ -64,12 +64,12 @@ function promptManagerAction() {
 
 // displayInventory will retrieve the current inventory from the database and output it to the console
 function displayInventory() {
-	// console.log('___ENTER displayInventory___');
+	
 
-	// Construct the db query string
+	
 	queryStr = 'SELECT * FROM products';
 
-	// Make the db query
+	
 	connection.query(queryStr, function(err, data) {
 		if (err) throw err;
 
@@ -90,20 +90,20 @@ function displayInventory() {
 
 	  	console.log("---------------------------------------------------------------------\n");
 
-		// End the database connection
+		
 		connection.end();
 	})
 }
 
 // displayLowInventory will display a list of products with the available quantity below 100
 function displayLowInventory() {
-	// console.log('___ENTER displayLowInventory');
+	;
 
-	// Construct the db query string
+	
 	
 	queryStr = 'SELECT * FROM products WHERE StockQuantity < 100';
 
-	// Make the db query
+	
 	connection.query(queryStr, function(err, data) {
 		if (err) throw err;
 
@@ -124,7 +124,7 @@ function displayLowInventory() {
 
 	  	console.log("---------------------------------------------------------------------\n");
 
-		// End the database connection
+	
 		connection.end();
 	})
 }
@@ -156,7 +156,7 @@ function validateNumeric(value) {
 
 // addInventory will guilde a user in adding additional quantify to an existing item
 function addInventory() {
-	// console.log('___ENTER addInventory___');
+	
 
 	// Prompt the user to select an item
 	inquirer.prompt([
@@ -175,19 +175,18 @@ function addInventory() {
 			filter: Number
 		}
 	]).then(function(input) {
-		// console.log('Manager has selected: \n    ItemId = '  + input.ItemId + '\n    additional quantity = ' + input.Quantity);
+		;
 
 		var item = input.itemId;
 		var addQuantity = input.quantity;
 
-		// Query db to confirm that the given item ID exists and to determine the current stock_count
+		
 		var queryStr = 'SELECT * FROM products WHERE ?';
 
 		connection.query(queryStr, {itemId: item}, function(err, data) {
 			if (err) throw err;
 
-			// If the user has selected an invalid Item ID, data attay will be empty
-			// console.log('data = ' + JSON.stringify(data));
+			
 
 			if (data.length === 0) {
 				console.log('ERROR: Invalid Item ID. Please select a valid Item ID.');
@@ -196,8 +195,7 @@ function addInventory() {
 			} else {
 				var ProductData = data[0];
 
-				// console.log('ProductData = ' + JSON.stringify(ProductData));
-				// console.log('ProductData.stock_quantity = ' + ProductData.stock_quantity);
+				
 
 				console.log('Updating Inventory...');
 
@@ -222,7 +220,7 @@ function addInventory() {
 
 // createNewProduct will guide the user in adding a new product to the inventory
 function createNewProduct() {
-	// console.log('___ENTER createNewProduct___');
+	
 
 	// Prompt the user to enter information about the new product
 	inquirer.prompt([
@@ -249,36 +247,36 @@ function createNewProduct() {
 			validate: validateInteger
 		}
 	]).then(function(input) {
-		// console.log('input: ' + JSON.stringify(input));
+		
 
 		console.log('Adding New Item: \n    ProductName = ' + input.ProductName + '\n' +  
 									   '    DepartmentName = ' + input.DepartmentName + '\n' +  
 									   '    Price = ' + input.Price + '\n' +  
 									   '    StockQuantity = ' + input.StockQuantity);
 
-		// Create the insertion query string
+		g
 		var queryStr = 'INSERT INTO products SET ?';
 
-		// Add new product to the db
+		
 		connection.query(queryStr, input, function (error, results, fields) {
 			if (error) throw error;
 
 			console.log('New product has been added to the inventory under Item ID ' + results.insertId + '.');
 			console.log("\n---------------------------------------------------------------------\n");
 
-			// End the database connection
+			
 			connection.end();
 		});
 	})
 }
 
-// runBamazon will execute the main application logic
+// runBamazon will execute the main application 
 function runBamazon() {
-	// console.log('___ENTER runBamazon___');
+	
 
 	// Prompt manager for input
 	promptManagerAction();
 }
 
-// Run the application logic
+// Run the application 
 runBamazon();
